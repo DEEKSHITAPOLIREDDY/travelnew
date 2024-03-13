@@ -5,18 +5,25 @@ import { FaRegWindowClose } from 'react-icons/fa';
 import { TbGridDots } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({resetSearch}) => {
   const [active, setActive] = useState('navBar');
 
   const showNav = () => {
     setActive('navBar activeNavbar');
   };
 
+  const handleHomeClick = () => {
+    // Call the resetSearch function passed from parent component
+    resetSearch();
+    // Close the navbar
+    setActive('navBar');
+  };
+
   return (
     <section className='navBarSection'>
       <header className="header flex">
         <div className="logoDiv">
-          <Link to="/" className="logo flex">
+          <Link to="/" className="logo flex" onClick={handleHomeClick}>
             <h1>
               <MdOutlineTravelExplore className="icon"/>
               Travel.
@@ -27,7 +34,7 @@ const Navbar = () => {
         <div className={active}>
           <ul className="navLists grid">
             <li className="navItem">
-              <Link to="/" className="navLink">Home</Link>
+              <Link to="/" className="navLink" onClick={handleHomeClick}>Home</Link>
             </li>
             
             <li className="navItem">

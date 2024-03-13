@@ -7,7 +7,7 @@ import Footer from './Components/Footer/Footer';
 import Contact from './pages/Contact/Contact'; // Import the ContactPage component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import About from './pages/About/About';
-
+import Europe from './pages/description/Europe/Europe';
 
 
 function App() {
@@ -19,9 +19,7 @@ function App() {
           <Route path="/" element={<Home />}/>
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About/>}/>
-
-
-          
+          <Route path="/description/Europe" element={<Europe/>}/>
         </Routes>
         <Footer />
       </div>

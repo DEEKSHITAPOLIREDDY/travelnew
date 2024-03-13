@@ -1,14 +1,14 @@
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import './main.css';
 import travel3 from '../../Assets/travel3.jpeg'
-import travel4 from '../../Assets/travel4.jpeg'
+// import travel4 from '../../Assets/travel4.jpeg'
 import {HiOutlineLocationMarker} from 'react-icons/hi'
 import {FaRegClipboard} from 'react-icons/fa'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
-import { Link } from 'react-router-dom';
+import Europe from '../../pages/description/Europe/Europe'
 
- export const Data = [
+const Data = [
   {
     id: 1,
     imgSrc: "paris.jpg",
@@ -106,72 +106,60 @@ import { Link } from 'react-router-dom';
 
 
 
+const Main = ({ searchCriteria }) => {
+  const [searchResult, setSearchResult] = useState([]);
 
-
-const Main = () => {
-  //lets create a react hook to add a scroll animation...
-useEffect(()=>{
-  Aos.init({duration:2000})
-},[])
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+    // Filter the data based on search criteria when it changes
+    const filteredData = Data.filter((destination) =>
+      destination.destination.toLowerCase().includes(searchCriteria.toLowerCase())
+    );
+    setSearchResult(filteredData);
+  }, [searchCriteria]);
 
   return (
-    <section className="main container section">
-      <div className="secTile">
-        <h3 className="title">
-          Most Visited destinations
-          </h3>
-
+    <section className='main container section'>
+      <div className='secTile'>
+        <h3 className='title'>Most Visited destinations</h3>
       </div>
-      <div className="secContent grid">
-        {
-    
-          Data.map(({id,imgSrc,destination,location,grade,fees,description})=>{
-            return(
-              <div key={id} data-aos="fade-up" className="singleDestination">
-                <Link>
-                <div className="imageDiv">
-                  <img  className="parris" src={travel3} alt={destination}/>
-                </div>
-                </Link>
-
-                
-                <div className="cardInfo">
-                  <h4 className="destination">
-                    {destination}
-                  </h4>
-                  <span className="continent flex">
-                  <HiOutlineLocationMarker className="icon" />
-                  <span className="name">{location}</span>
-
-                  </span>
-                  <div className="fees flex">
-                    <div className="startdate">
-                      
-                      <span>{grade}<small>+1</small></span>
-                    </div>
-                    <div className="price">
-                      <h5>{fees}</h5>
-                    </div>
-                  </div>
-                  <div className="desc">
-                    <p>{description}</p>
-                  </div>
-                  <button className="btn flex">
-                    BOOK NOW <FaRegClipboard className="icon" />
-
-
-                  </button>
-                </div>
-
+      <div className='secContent grid'>
+        {searchResult.map(({ id, imgSrc, destination, location, grade, fees, description }) => {
+          return (
+            <a key={id} href={`/description/${location}`} data-aos='fade-up' className='singleDestination'>
+              <div className='imageDiv'>
+                <img className='parris' src={travel3} alt={destination} />
               </div>
-            )
-          })
-        }
-        
-
+              <div className='cardInfo'>
+                <h4 className='destination'>{destination}</h4>
+                <span className='continent flex'>
+                  <HiOutlineLocationMarker className='icon' />
+                  <span className='name'>{location}</span>
+                </span>
+                <div className='fees flex'>
+                  <div className='startdate'>
+                    <span>
+                      {grade}
+                      <small>+1</small>
+                    </span>
+                  </div>
+                  <div className='price'>
+                    <h5>{fees}</h5>
+                  </div>
+                </div>
+                <div className='desc'>
+                  <p>{description}</p>
+                </div>
+                <button className='btn flex'>
+                  BOOK NOW <FaRegClipboard className='icon' />
+                </button>
+              </div>
+            </a>
+          );
+        })}
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default Main;
