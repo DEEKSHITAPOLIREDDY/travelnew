@@ -2,7 +2,7 @@ import React from 'react'
 
 const Europe = () => {
   return (
-    <div>Paris
+    <div>We are going to paris
     </div>
   )
 }
